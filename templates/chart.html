@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Chart</title>
+<script>
+window.onload = function () {
+var pnl="{{PNL}}"
+var inputs = JSON.parse(pnl);
+var position = "{{position}}"
+var inputsPosition = JSON.parse(position);
+
+function setObject(name) {
+  this.y = name;
+}
+// PNL Graph Chart
+var PnLarr = [];
+for (var i = 0; i < inputs.length; i++) {
+
+  var value = inputs[i];
+  var setObj = new setObject(value);
+  PnLarr.push(setObj);
+}
+var graph = [{
+		type: "line",
+		name: "PnL Graph",
+    showInLegend: true,
+    color:"dodgerblue",
+		dataPoints:PnLarr
+	}]
+
+
+var pnlChart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	theme: "light2",
+	title:{
+		text: "PnL Chart"
+	},
+	axisY:{
+		title: "Price (in USD)",
+		includeZero: false
+	},
+
+	data: graph
+
+});
+
+
+//  Positional and PnL graph
+var Positionarr = [];
+for (var i = 0; i < inputsPosition.length; i++) {
+
+  var value = inputsPosition[i];
+  var setObj = new setObject(value);
+  Positionarr.push(setObj);
+}
+
+var Positiongraph = [{
+		type: "line",
+		name: "Position Graph",
+    showInLegend: true,
+		dataPoints:Positionarr
+	}]
+
+
+var PositiongraphChart = new CanvasJS.Chart("PositionContainer", {
+	animationEnabled: true,
+	theme: "light2",
+	title:{
+		text: "Position Chart"
+	},
+	axisY:{
+		title: "Value in Numbers",
+		includeZero: false
+	},
+
+	data: Positiongraph
+
+});
+//
+pnlChart.render();
+PositiongraphChart.render()
+}
+</script>
+</head>
+<body>
+<!-- <div id="PositionPnLChartContainer" style="height: 600px; width: 100%;"></div><br><br><br> -->
+<div id="chartContainer" style="height: 300px; width: 100%;"></div><br><br>
+<div id="PositionContainer" style="height: 300px; width: 100%;"></div>
+
+
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</body>
+</html>
